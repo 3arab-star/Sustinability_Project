@@ -1,2577 +1,2032 @@
-
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="CLIMASENSE منصة لمتابعة الطقس والبلاغات والمخاطر المناخية في مختلف المناطق.">
-<title>CLIMASENSE | افهم. أبلغ. احمِ.</title>
-
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap');
-
-:root {
-    --ink: #142b35;
-    --muted: #71818a;
-    --blue: #168fba;
-    --line: #e5eef0;
-    --green: #2c9b79;
-    --orange: #d9903e;
-    --red: #d45e52;
-    --violet: #8070c9;
-}
-
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    color: var(--ink);
-    font-family: 'Cairo', sans-serif;
-    background: #fff;
-    text-align: right;
-}
-
-button, input, select, textarea {
-    font: inherit;
-}
-
-button, a {
-    cursor: pointer;
-}
-
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
-.nav {
-    min-height: 76px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px max(calc((100% - 1160px)/2), 5%);
-    border-bottom: 1px solid var(--line);
-    position: sticky;
-    top: 0;
-    background: #fffffff2;
-    backdrop-filter: blur(12px);
-    z-index: 50;
-    gap: 15px;
-}
-
-.brand {
-    font-size: 19px;
-    font-weight: 800;
-    white-space: nowrap;
-    direction: ltr;
-}
-
-.brand b {
-    color: var(--blue);
-}
-
-.mark {
-    display: inline-grid;
-    place-items: center;
-    width: 29px;
-    height: 29px;
-    border-radius: 9px;
-    background: var(--ink);
-    color: white;
-    margin-left: 7px;
-}
-
-.navlinks {
-    display: flex;
-    gap: 20px;
-    font-size: 12px;
-    font-weight: 700;
-    color: #596c74;
-}
-
-.navlinks a:hover {
-    color: var(--blue);
-}
-
-.rightnav {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 12px;
-}
-
-.btn {
-    border: 0;
-    border-radius: 9px;
-    padding: 12px 17px;
-    font-size: 12px;
-    font-weight: 800;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    transition: .2s;
-}
-
-.btn:hover {
-    transform: translateY(-2px);
-}
-
-.primary {
-    background: var(--blue);
-    color: white;
-    box-shadow: 0 7px 18px #168fba25;
-}
-
-.ghost {
-    border: 1px solid var(--line);
-    background: white;
-    color: var(--ink);
-}
-
-.small {
-    padding: 9px 13px;
-}
-
-.container {
-    max-width: 1160px;
-    margin: auto;
-    padding-left: 20px;
-    padding-right: 20px;
-}
-
-.hero {
-    min-height: 510px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    gap: 35px;
-    padding-top: 55px;
-    padding-bottom: 45px;
-}
-
-.eyebrow {
-    font-size: 10px;
-    font-weight: 800;
-    color: var(--blue);
-    margin-bottom: 16px;
-}
-
-.hero h1 {
-    font-size: clamp(40px, 5vw, 59px);
-    line-height: 1.2;
-    font-weight: 800;
-    margin: 0 0 20px;
-}
-
-.hero h1 em,
-.pagehead h1 em {
-    font-style: normal;
-    color: var(--blue);
-}
-
-.hero p,
-.pagehead p {
-    color: var(--muted);
-    font-size: 14px;
-    line-height: 1.9;
-    max-width: 510px;
-}
-
-.heroactions {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-top: 25px;
-}
-
-.art {
-    height: 355px;
-    border-radius: 25px;
-    position: relative;
-    overflow: hidden;
-    background: linear-gradient(145deg, #dff5f8, #f0f3fb 65%, #e8e8fa);
-}
-
-.sun {
-    position: absolute;
-    right: 75px;
-    top: 32px;
-    width: 145px;
-    height: 145px;
-    border-radius: 50%;
-    background: #ffe4a3;
-}
-
-.skyline {
-    position: absolute;
-    bottom: 0;
-    height: 205px;
-    width: 100%;
-    background: #afdbe2;
-    clip-path: polygon(
-        0 48%,10% 48%,10% 24%,22% 24%,22% 55%,
-        35% 55%,35% 0,50% 0,50% 40%,64% 40%,
-        64% 20%,77% 20%,77% 53%,90% 53%,90% 30%,
-        100% 30%,100% 100%,0 100%
-    );
-}
-
-.tower {
-    position: absolute;
-    bottom: 0;
-    background: #7ebdc9;
-    width: 13%;
-    height: 120px;
-    left: 16%;
-    border-radius: 5px 5px 0 0;
-}
-
-.tower.t2 {
-    left: 42%;
-    height: 175px;
-    background: #70b3c0;
-}
-
-.tower.t3 {
-    left: 70%;
-    height: 135px;
-}
-
-.water {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 26px;
-    background: #168fba;
-    opacity: .6;
-}
-
-.floatbox {
-    position: absolute;
-    background: #fff;
-    padding: 13px 16px;
-    border-radius: 12px;
-    box-shadow: 0 12px 30px #234a5a19;
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    font-size: 12px;
-}
-
-.floatbox small {
-    display: block;
-    color: var(--muted);
-    font-size: 10px;
-    margin-top: 3px;
-}
-
-.f1 {
-    top: 38px;
-    right: 20px;
-}
-
-.f2 {
-    bottom: 38px;
-    left: 20px;
-}
-
-.stats {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    padding: 22px 0;
-    border-block: 1px solid var(--line);
-    margin-top: 5px;
-}
-
-.stat {
-    padding: 5px 22px;
-    border-left: 1px solid var(--line);
-}
-
-.stat:last-child {
-    border: 0;
-}
-
-.stat strong {
-    display: block;
-    font-size: 26px;
-    font-weight: 800;
-}
-
-.stat span {
-    font-size: 10px;
-    color: var(--muted);
-}
-
-.section {
-    padding: 60px 0;
-}
-
-.sectiontitle {
-    display: flex;
-    justify-content: space-between;
-    align-items: end;
-    gap: 20px;
-    margin-bottom: 25px;
-}
-
-.sectiontitle h2 {
-    font-size: 31px;
-    line-height: 1.4;
-    font-weight: 800;
-    margin: 0;
-}
-
-.sectiontitle p {
-    font-size: 12px;
-    line-height: 1.8;
-    color: var(--muted);
-    max-width: 420px;
-}
-
-.features {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
-}
-
-.feature,
-.panel {
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    padding: 22px;
-    background: white;
-}
-
-.feature {
-    min-height: 190px;
-}
-
-.ico {
-    width: 40px;
-    height: 40px;
-    border-radius: 11px;
-    display: grid;
-    place-items: center;
-    font-size: 20px;
-    background: #e5f6fa;
-    color: var(--blue);
-}
-
-.feature h3 {
-    font-size: 14px;
-    font-weight: 800;
-    margin: 17px 0 7px;
-}
-
-.feature p,
-.panel p {
-    font-size: 11px;
-    line-height: 1.9;
-    color: var(--muted);
-}
-
-.feature button {
-    padding: 0;
-    border: 0;
-    background: none;
-    color: var(--blue);
-    font-size: 11px;
-    font-weight: 800;
-    margin-top: 8px;
-}
-
-.callout {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 32px 38px;
-    background: #edf8fa;
-    border-radius: 17px;
-    margin: 12px auto 35px;
-    gap: 20px;
-}
-
-.callout h2 {
-    font-size: 27px;
-    font-weight: 800;
-    margin: 0;
-}
-
-.callout p {
-    font-size: 11px;
-    color: var(--muted);
-}
-
-.disclaimer {
-    background: #fff8eb;
-    border: 1px solid #f5e7c9;
-    border-radius: 10px;
-    padding: 14px 17px;
-    margin: 25px auto 50px;
-    font-size: 11px;
-    color: #806d50;
-    line-height: 1.9;
-}
-
-.page {
-    display: none;
-    min-height: 70vh;
-}
-
-.page.active {
-    display: block;
-}
-
-.pagehead {
-    padding: 55px 0 25px;
-}
-
-.pagehead h1 {
-    font-size: 43px;
-    font-weight: 800;
-    margin: 0;
-}
-
-.pagehead p {
-    font-size: 12px;
-}
-
-.grid2 {
-    display: grid;
-    grid-template-columns: 1.4fr 1fr;
-    gap: 17px;
-    margin-bottom: 60px;
-}
-
-.grid3 {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 13px;
-}
-
-.label {
-    font-size: 10px;
-    font-weight: 800;
-    color: var(--muted);
-}
-
-.temp {
-    font-size: 69px;
-    font-weight: 800;
-    margin: 20px 0 0;
-}
-
-.metrics {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    border-top: 1px solid var(--line);
-    margin-top: 25px;
-    padding-top: 19px;
-}
-
-.metrics div {
-    display: grid;
-    gap: 6px;
-}
-
-.metrics span {
-    font-size: 10px;
-    color: var(--muted);
-}
-
-.metrics b {
-    font-size: 15px;
-}
-
-.riskvalue {
-    font-size: 35px;
-    font-weight: 800;
-    margin: 18px 0 5px;
-    color: var(--green);
-}
-
-.riskvalue.medium {
-    color: var(--orange);
-}
-
-.riskvalue.high {
-    color: var(--red);
-}
-
-.factor {
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid var(--line);
-    padding: 12px 0;
-    font-size: 11px;
-}
-
-.mapbox {
-    height: 360px;
-    border-radius: 13px;
-    overflow: hidden;
-    border: 1px solid var(--line);
-    background: #eaf3f5;
-    position: relative;
-}
-
-.mapbox iframe {
-    width: 100%;
-    height: 100%;
-    border: 0;
-}
-
-.maphelp {
-    font-size: 10px;
-    color: var(--muted);
-    margin: 8px 0 18px;
-}
-
-.field {
-    display: grid;
-    gap: 7px;
-    margin-bottom: 13px;
-}
-
-.field label {
-    font-size: 11px;
-    font-weight: 800;
-    color: #53656d;
-}
-
-.field input,
-.field select,
-.field textarea {
-    width: 100%;
-    border: 1px solid #dfe8eb;
-    border-radius: 8px;
-    padding: 11px;
-    font-size: 12px;
-    background: #fff;
-    color: var(--ink);
-}
-
-.field textarea {
-    min-height: 95px;
-    resize: vertical;
-}
-
-.formrow {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-}
-
-.report {
-    display: flex;
-    gap: 12px;
-    padding: 14px 0;
-    border-bottom: 1px solid var(--line);
-    align-items: flex-start;
-}
-
-.report .desc {
-    flex: 1;
-}
-
-.report h4 {
-    font-size: 12px;
-    margin: 0 0 4px;
-}
-
-.report p {
-    margin: 0;
-    font-size: 10px;
-}
-
-.tag {
-    font-size: 9px;
-    font-weight: 800;
-    border-radius: 20px;
-    padding: 6px 9px;
-    background: #f1f4f5;
-    white-space: nowrap;
-}
-
-.tag.Verified {
-    background: #eaf2ff;
-    color: #4777b9;
-}
-
-.tag.Resolved {
-    background: #e8f6ef;
-    color: #318563;
-}
-
-.tag.In-Progress {
-    background: #fff4e5;
-    color: #b47b2c;
-}
-
-.empty {
-    text-align: center;
-    color: var(--muted);
-    font-size: 12px;
-    padding: 30px;
-}
-
-.tablewrap {
-    overflow: auto;
-}
-
-.table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 650px;
-}
-
-.table th,
-.table td {
-    text-align: right;
-    border-bottom: 1px solid var(--line);
-    padding: 12px;
-    font-size: 10px;
-}
-
-.table th {
-    color: var(--muted);
-}
-
-.table select {
-    border: 1px solid var(--line);
-    padding: 7px;
-    border-radius: 6px;
-    font-size: 10px;
-}
-
-.auth {
-    max-width: 430px;
-    margin: 45px auto 80px;
-}
-
-.auth h2 {
-    font-size: 26px;
-    font-weight: 800;
-}
-
-.auth .field {
-    margin: 13px 0;
-}
-
-.muted {
-    color: var(--muted);
-}
-
-.notice {
-    font-size: 10px;
-    color: var(--muted);
-    line-height: 1.9;
-}
-
-.hidden {
-    display: none !important;
-}
-
-footer {
-    border-top: 1px solid var(--line);
-    padding: 30px 0;
-    color: var(--muted);
-    font-size: 10px;
-    margin-top: 35px;
-}
-
-.toast {
-    position: fixed;
-    left: 20px;
-    bottom: 20px;
-    background: #17343e;
-    color: white;
-    padding: 13px 17px;
-    border-radius: 9px;
-    font-size: 12px;
-    z-index: 100;
-    box-shadow: 0 9px 30px #0002;
-}
-
-.admin-toolbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 15px;
-}
-
-.danger {
-    background: #fff0ee;
-    color: #b64d43;
-    border: 1px solid #f4d4d0;
-}
-
-.delete-btn {
-    border: 1px solid #f0d5d2;
-    background: #fff7f6;
-    color: #b64d43;
-    border-radius: 7px;
-    padding: 7px 10px;
-    font-size: 10px;
-    font-weight: 800;
-}
-
-@media(max-width:850px) {
-    .nav {
-        padding: 12px 4%;
-    }
-
-    .navlinks {
-        gap: 11px;
-    }
-
-    .hero,
-    .container {
-        padding-left: 5%;
-        padding-right: 5%;
-    }
-
-    .features {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .sectiontitle {
-        align-items: flex-start;
-        flex-direction: column;
-    }
-
-    .grid2 {
-        grid-template-columns: 1fr;
-    }
-
-    .stats {
-        margin-left: 5%;
-        margin-right: 5%;
-    }
-}
-
-@media(max-width:600px) {
-    .nav {
-        height: auto;
-        flex-wrap: wrap;
-        padding: 13px 5%;
-        gap: 12px;
-    }
-
-    .navlinks {
-        order: 3;
-        width: 100%;
-        overflow: auto;
-        padding: 4px 0;
-    }
-
-    .navlinks a {
-        white-space: nowrap;
-    }
-
-    .rightnav {
-        margin-right: auto;
-    }
-
-    .hero {
-        grid-template-columns: 1fr;
-        padding-top: 35px;
-    }
-
-    .art {
-        height: 270px;
-    }
-
-    .hero h1 {
-        font-size: 43px;
-    }
-
-    .stats {
-        grid-template-columns: repeat(2, 1fr);
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="CLIMASENSE منصة لمتابعة الطقس والبلاغات والمخاطر المناخية في مختلف المناطق."
+    />
+    <title>CLIMASENSE | افهم. أبلغ. احمِ.</title>
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap");
+
+      :root {
+        --ink: #142b35;
+        --muted: #71818a;
+        --blue: #168fba;
+        --line: #e5eef0;
+        --green: #2c9b79;
+        --orange: #d9903e;
+        --red: #d45e52;
+        --violet: #8070c9;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        font-family: "Cairo", sans-serif;
+        background: #fff;
+        text-align: right;
+      }
+
+      button,
+      input,
+      select,
+      textarea {
+        font: inherit;
+      }
+
+      button,
+      a {
+        cursor: pointer;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .nav {
+        min-height: 76px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px max(calc((100% - 1160px) / 2), 5%);
+        border-bottom: 1px solid var(--line);
+        position: sticky;
+        top: 0;
+        background: #fffffff2;
+        backdrop-filter: blur(12px);
+        z-index: 50;
         gap: 15px;
-    }
+      }
 
-    .stat:nth-child(2) {
-        border-left: 0;
-    }
+      .brand {
+        font-size: 19px;
+        font-weight: 800;
+        white-space: nowrap;
+        direction: ltr;
+      }
 
-    .features {
-        grid-template-columns: 1fr;
-    }
+      .brand b {
+        color: var(--blue);
+      }
 
-    .callout {
-        margin: 0 5%;
-        align-items: flex-start;
-        flex-direction: column;
-        padding: 25px;
-    }
+      .mark {
+        display: inline-grid;
+        place-items: center;
+        width: 29px;
+        height: 29px;
+        border-radius: 9px;
+        background: var(--ink);
+        color: white;
+        margin-left: 7px;
+      }
 
-    .pagehead h1 {
-        font-size: 34px;
-    }
-
-    .formrow {
-        grid-template-columns: 1fr;
-    }
-
-    .metrics {
-        gap: 5px;
-    }
-
-    .metrics b {
+      .navlinks {
+        display: flex;
+        gap: 20px;
         font-size: 12px;
-    }
+        font-weight: 700;
+        color: #596c74;
+      }
 
-    .admin-toolbar {
+      .navlinks a:hover {
+        color: var(--blue);
+      }
+
+      .rightnav {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 12px;
+      }
+
+      .btn {
+        border: 0;
+        border-radius: 9px;
+        padding: 12px 17px;
+        font-size: 12px;
+        font-weight: 800;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: 0.2s;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+      }
+
+      .primary {
+        background: var(--blue);
+        color: white;
+        box-shadow: 0 7px 18px #168fba25;
+      }
+
+      .ghost {
+        border: 1px solid var(--line);
+        background: white;
+        color: var(--ink);
+      }
+
+      .small {
+        padding: 9px 13px;
+      }
+
+      .container {
+        max-width: 1160px;
+        margin: auto;
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .hero {
+        min-height: 510px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        gap: 35px;
+        padding-top: 55px;
+        padding-bottom: 45px;
+      }
+
+      .eyebrow {
+        font-size: 10px;
+        font-weight: 800;
+        color: var(--blue);
+        margin-bottom: 16px;
+      }
+
+      .hero h1 {
+        font-size: clamp(40px, 5vw, 59px);
+        line-height: 1.2;
+        font-weight: 800;
+        margin: 0 0 20px;
+      }
+
+      .hero h1 em,
+      .pagehead h1 em {
+        font-style: normal;
+        color: var(--blue);
+      }
+
+      .hero p,
+      .pagehead p {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.9;
+        max-width: 510px;
+      }
+
+      .heroactions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 25px;
+      }
+
+      .art {
+        height: 355px;
+        border-radius: 25px;
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(145deg, #dff5f8, #f0f3fb 65%, #e8e8fa);
+      }
+
+      .sun {
+        position: absolute;
+        right: 75px;
+        top: 32px;
+        width: 145px;
+        height: 145px;
+        border-radius: 50%;
+        background: #ffe4a3;
+      }
+
+      .skyline {
+        position: absolute;
+        bottom: 0;
+        height: 205px;
+        width: 100%;
+        background: #afdbe2;
+        clip-path: polygon(
+          0 48%,
+          10% 48%,
+          10% 24%,
+          22% 24%,
+          22% 55%,
+          35% 55%,
+          35% 0,
+          50% 0,
+          50% 40%,
+          64% 40%,
+          64% 20%,
+          77% 20%,
+          77% 53%,
+          90% 53%,
+          90% 30%,
+          100% 30%,
+          100% 100%,
+          0 100%
+        );
+      }
+
+      .tower {
+        position: absolute;
+        bottom: 0;
+        background: #7ebdc9;
+        width: 13%;
+        height: 120px;
+        left: 16%;
+        border-radius: 5px 5px 0 0;
+      }
+
+      .tower.t2 {
+        left: 42%;
+        height: 175px;
+        background: #70b3c0;
+      }
+
+      .tower.t3 {
+        left: 70%;
+        height: 135px;
+      }
+
+      .water {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 26px;
+        background: #168fba;
+        opacity: 0.6;
+      }
+
+      .floatbox {
+        position: absolute;
+        background: #fff;
+        padding: 13px 16px;
+        border-radius: 12px;
+        box-shadow: 0 12px 30px #234a5a19;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        font-size: 12px;
+      }
+
+      .floatbox small {
+        display: block;
+        color: var(--muted);
+        font-size: 10px;
+        margin-top: 3px;
+      }
+
+      .f1 {
+        top: 38px;
+        right: 20px;
+      }
+
+      .f2 {
+        bottom: 38px;
+        left: 20px;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        padding: 22px 0;
+        border-block: 1px solid var(--line);
+        margin-top: 5px;
+      }
+
+      .stat {
+        padding: 5px 22px;
+        border-left: 1px solid var(--line);
+      }
+
+      .stat:last-child {
+        border: 0;
+      }
+
+      .stat strong {
+        display: block;
+        font-size: 26px;
+        font-weight: 800;
+      }
+
+      .stat span {
+        font-size: 10px;
+        color: var(--muted);
+      }
+
+      .section {
+        padding: 60px 0;
+      }
+
+      .sectiontitle {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        gap: 20px;
+        margin-bottom: 25px;
+      }
+
+      .sectiontitle h2 {
+        font-size: 31px;
+        line-height: 1.4;
+        font-weight: 800;
+        margin: 0;
+      }
+
+      .sectiontitle p {
+        font-size: 12px;
+        line-height: 1.8;
+        color: var(--muted);
+        max-width: 420px;
+      }
+
+      .features {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+      }
+
+      .feature,
+      .panel {
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 22px;
+        background: white;
+      }
+
+      .feature {
+        min-height: 190px;
+      }
+
+      .ico {
+        width: 40px;
+        height: 40px;
+        border-radius: 11px;
+        display: grid;
+        place-items: center;
+        font-size: 20px;
+        background: #e5f6fa;
+        color: var(--blue);
+      }
+
+      .feature h3 {
+        font-size: 14px;
+        font-weight: 800;
+        margin: 17px 0 7px;
+      }
+
+      .feature p,
+      .panel p {
+        font-size: 11px;
+        line-height: 1.9;
+        color: var(--muted);
+      }
+
+      .feature button {
+        padding: 0;
+        border: 0;
+        background: none;
+        color: var(--blue);
+        font-size: 11px;
+        font-weight: 800;
+        margin-top: 8px;
+      }
+
+      .callout {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 32px 38px;
+        background: #edf8fa;
+        border-radius: 17px;
+        margin: 12px auto 35px;
+        gap: 20px;
+      }
+
+      .callout h2 {
+        font-size: 27px;
+        font-weight: 800;
+        margin: 0;
+      }
+
+      .callout p {
+        font-size: 11px;
+        color: var(--muted);
+      }
+
+      .disclaimer {
+        background: #fff8eb;
+        border: 1px solid #f5e7c9;
+        border-radius: 10px;
+        padding: 14px 17px;
+        margin: 25px auto 50px;
+        font-size: 11px;
+        color: #806d50;
+        line-height: 1.9;
+      }
+
+      .page {
+        display: none;
+        min-height: 70vh;
+      }
+
+      .page.active {
+        display: block;
+      }
+
+      .pagehead {
+        padding: 55px 0 25px;
+      }
+
+      .pagehead h1 {
+        font-size: 43px;
+        font-weight: 800;
+        margin: 0;
+      }
+
+      .pagehead p {
+        font-size: 12px;
+      }
+
+      .grid2 {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr;
+        gap: 17px;
+        margin-bottom: 60px;
+      }
+
+      .grid3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 13px;
+      }
+
+      .label {
+        font-size: 10px;
+        font-weight: 800;
+        color: var(--muted);
+      }
+
+      .temp {
+        font-size: 69px;
+        font-weight: 800;
+        margin: 20px 0 0;
+      }
+
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        border-top: 1px solid var(--line);
+        margin-top: 25px;
+        padding-top: 19px;
+      }
+
+      .metrics div {
+        display: grid;
+        gap: 6px;
+      }
+
+      .metrics span {
+        font-size: 10px;
+        color: var(--muted);
+      }
+
+      .metrics b {
+        font-size: 15px;
+      }
+
+      .riskvalue {
+        font-size: 35px;
+        font-weight: 800;
+        margin: 18px 0 5px;
+        color: var(--green);
+      }
+
+      .riskvalue.medium {
+        color: var(--orange);
+      }
+
+      .riskvalue.high {
+        color: var(--red);
+      }
+
+      .factor {
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--line);
+        padding: 12px 0;
+        font-size: 11px;
+      }
+
+      .mapbox {
+        height: 360px;
+        border-radius: 13px;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        background: #eaf3f5;
+        position: relative;
+      }
+
+      .mapbox iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
+
+      .maphelp {
+        font-size: 10px;
+        color: var(--muted);
+        margin: 8px 0 18px;
+      }
+
+      .field {
+        display: grid;
+        gap: 7px;
+        margin-bottom: 13px;
+      }
+
+      .field label {
+        font-size: 11px;
+        font-weight: 800;
+        color: #53656d;
+      }
+
+      .field input,
+      .field select,
+      .field textarea {
+        width: 100%;
+        border: 1px solid #dfe8eb;
+        border-radius: 8px;
+        padding: 11px;
+        font-size: 12px;
+        background: #fff;
+        color: var(--ink);
+      }
+
+      .field textarea {
+        min-height: 95px;
+        resize: vertical;
+      }
+
+      .formrow {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .report {
+        display: flex;
+        gap: 12px;
+        padding: 14px 0;
+        border-bottom: 1px solid var(--line);
         align-items: flex-start;
-        flex-direction: column;
-    }
-}
-</style>
-</head>
+      }
 
-<body>
+      .report .desc {
+        flex: 1;
+      }
 
-<header class="nav">
+      .report h4 {
+        font-size: 12px;
+        margin: 0 0 4px;
+      }
 
-    <a class="brand" href="#home">
+      .report p {
+        margin: 0;
+        font-size: 10px;
+      }
+
+      .tag {
+        font-size: 9px;
+        font-weight: 800;
+        border-radius: 20px;
+        padding: 6px 9px;
+        background: #f1f4f5;
+        white-space: nowrap;
+      }
+
+      .tag.Verified {
+        background: #eaf2ff;
+        color: #4777b9;
+      }
+
+      .tag.Resolved {
+        background: #e8f6ef;
+        color: #318563;
+      }
+
+      .tag.In-Progress {
+        background: #fff4e5;
+        color: #b47b2c;
+      }
+
+      .empty {
+        text-align: center;
+        color: var(--muted);
+        font-size: 12px;
+        padding: 30px;
+      }
+
+      .tablewrap {
+        overflow: auto;
+      }
+
+      .table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 650px;
+      }
+
+      .table th,
+      .table td {
+        text-align: right;
+        border-bottom: 1px solid var(--line);
+        padding: 12px;
+        font-size: 10px;
+      }
+
+      .table th {
+        color: var(--muted);
+      }
+
+      .table select {
+        border: 1px solid var(--line);
+        padding: 7px;
+        border-radius: 6px;
+        font-size: 10px;
+      }
+
+      .auth {
+        max-width: 430px;
+        margin: 45px auto 80px;
+      }
+
+      .auth h2 {
+        font-size: 26px;
+        font-weight: 800;
+      }
+
+      .auth .field {
+        margin: 13px 0;
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      .notice {
+        font-size: 10px;
+        color: var(--muted);
+        line-height: 1.9;
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      footer {
+        border-top: 1px solid var(--line);
+        padding: 30px 0;
+        color: var(--muted);
+        font-size: 10px;
+        margin-top: 35px;
+      }
+
+      .toast {
+        position: fixed;
+        left: 20px;
+        bottom: 20px;
+        background: #17343e;
+        color: white;
+        padding: 13px 17px;
+        border-radius: 9px;
+        font-size: 12px;
+        z-index: 100;
+        box-shadow: 0 9px 30px #0002;
+      }
+
+      .admin-toolbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 15px;
+      }
+
+      .danger {
+        background: #fff0ee;
+        color: #b64d43;
+        border: 1px solid #f4d4d0;
+      }
+
+      .delete-btn {
+        border: 1px solid #f0d5d2;
+        background: #fff7f6;
+        color: #b64d43;
+        border-radius: 7px;
+        padding: 7px 10px;
+        font-size: 10px;
+        font-weight: 800;
+      }
+
+      @media (max-width: 850px) {
+        .nav {
+          padding: 12px 4%;
+        }
+
+        .navlinks {
+          gap: 11px;
+        }
+
+        .hero,
+        .container {
+          padding-left: 5%;
+          padding-right: 5%;
+        }
+
+        .features {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .sectiontitle {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .grid2 {
+          grid-template-columns: 1fr;
+        }
+
+        .stats {
+          margin-left: 5%;
+          margin-right: 5%;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .nav {
+          height: auto;
+          flex-wrap: wrap;
+          padding: 13px 5%;
+          gap: 12px;
+        }
+
+        .navlinks {
+          order: 3;
+          width: 100%;
+          overflow: auto;
+          padding: 4px 0;
+        }
+
+        .navlinks a {
+          white-space: nowrap;
+        }
+
+        .rightnav {
+          margin-right: auto;
+        }
+
+        .hero {
+          grid-template-columns: 1fr;
+          padding-top: 35px;
+        }
+
+        .art {
+          height: 270px;
+        }
+
+        .hero h1 {
+          font-size: 43px;
+        }
+
+        .stats {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 15px;
+        }
+
+        .stat:nth-child(2) {
+          border-left: 0;
+        }
+
+        .features {
+          grid-template-columns: 1fr;
+        }
+
+        .callout {
+          margin: 0 5%;
+          align-items: flex-start;
+          flex-direction: column;
+          padding: 25px;
+        }
+
+        .pagehead h1 {
+          font-size: 34px;
+        }
+
+        .formrow {
+          grid-template-columns: 1fr;
+        }
+
+        .metrics {
+          gap: 5px;
+        }
+
+        .metrics b {
+          font-size: 12px;
+        }
+
+        .admin-toolbar {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="nav">
+      <a class="brand" href="#home">
         <span class="mark">C</span>CLIMA<b>SENSE</b>
-    </a>
+      </a>
 
-    <nav class="navlinks">
+      <nav class="navlinks">
         <a href="#home">الرئيسية</a>
         <a href="#weather">الطقس</a>
         <a href="#risk">تحليل المخاطر</a>
         <a href="#community">خريطة المجتمع</a>
-        <a href="#report">البلاغات</a>
-    </nav>
+        <a href="#report">أبلغ عن مشكلة</a>
+      </nav>
 
-    <div class="rightnav" id="navuser">
-        <button class="btn ghost small" onclick="showPage('login')">تسجيل الدخول</button>
-        <button class="btn primary small" onclick="showPage('register')">انضم إلينا</button>
-    </div>
+      <div class="rightnav" id="navuser">
+        <span class="notice">المشاركة متاحة للجميع</span>
+      </div>
+    </header>
 
-</header>
-
-<main>
-
-<!-- الصفحة الرئيسية -->
-<section class="page active" id="home">
-
-    <div class="container hero">
-
-        <div>
+    <main>
+      <!-- الصفحة الرئيسية -->
+      <section class="page active" id="home">
+        <div class="container hero">
+          <div>
             <div class="eyebrow">● طريقة أذكى لفهم المخاطر المناخية</div>
 
             <h1>
-                افهم المخاطر.<br>
-                <em>احمِ مدينتك.</em>
+              افهم المخاطر.<br />
+              <em>احمِ مدينتك.</em>
             </h1>
 
             <p>
-                يجمع CLIMASENSE بين معلومات الطقس وبلاغات المجتمع
-                لمساعدة السكان في مختلف المدن والمناطق على فهم
-                التحديات المناخية المحلية واتخاذ خطوات واعية.
+              يجمع CLIMASENSE بين معلومات الطقس وبلاغات المجتمع لمساعدة السكان
+              في مختلف المدن والمناطق على فهم التحديات المناخية المحلية واتخاذ
+              خطوات واعية.
             </p>
 
             <div class="heroactions">
-                <button class="btn primary" onclick="showPage('weather')">
-                    استكشف الطقس ↗
-                </button>
+              <button class="btn primary" onclick="showPage('weather')">
+                استكشف الطقس ↗
+              </button>
 
-                <button class="btn ghost" onclick="showPage('community')">
-                    اعرض خريطة المجتمع
-                </button>
+              <button class="btn ghost" onclick="showPage('community')">
+                اعرض خريطة المجتمع
+              </button>
             </div>
 
-            <p class="notice" style="margin-top:25px">
-                ● وعي مناخي بمشاركة المجتمع · اختر موقعك من أي مكان
+            <p class="notice" style="margin-top: 25px">
+              ● وعي مناخي بمشاركة المجتمع · اختر موقعك من أي مكان
             </p>
-        </div>
+          </div>
 
-        <div class="art">
-
+          <div class="art">
             <div class="sun"></div>
 
             <div class="skyline">
-                <div class="tower"></div>
-                <div class="tower t2"></div>
-                <div class="tower t3"></div>
-                <div class="water"></div>
+              <div class="tower"></div>
+              <div class="tower t2"></div>
+              <div class="tower t3"></div>
+              <div class="water"></div>
             </div>
 
             <div class="floatbox f1">
-                ☀
-                <div>
-                    <b>معلومات مناخية</b>
-                    <small>بيانات الطقس في مكان واحد</small>
-                </div>
+              ☀
+              <div>
+                <b>معلومات مناخية</b>
+                <small>بيانات الطقس في مكان واحد</small>
+              </div>
             </div>
 
             <div class="floatbox f2">
-                ⌖
-                <div>
-                    <b>بلاغات محلية</b>
-                    <small>تابع ما يحدث في منطقتك</small>
-                </div>
+              ⌖
+              <div>
+                <b>بلاغات محلية</b>
+                <small>تابع ما يحدث في منطقتك</small>
+              </div>
             </div>
-
+          </div>
         </div>
 
-    </div>
-
-    <div class="container stats">
-
-        <div class="stat">
+        <div class="container stats">
+          <div class="stat">
             <strong id="statreports">0</strong>
             <span>بلاغات المجتمع</span>
-        </div>
+          </div>
 
-        <div class="stat">
+          <div class="stat">
             <strong id="statpending">0</strong>
             <span>بانتظار المراجعة</span>
-        </div>
+          </div>
 
-        <div class="stat">
+          <div class="stat">
             <strong id="statresolved">0</strong>
             <span>البلاغات التي تم حلها</span>
-        </div>
+          </div>
 
-        <div class="stat">
+          <div class="stat">
             <strong>2</strong>
             <span>أهداف التنمية المستدامة المدعومة</span>
+          </div>
         </div>
 
-    </div>
-
-    <div class="container section">
-
-        <div class="sectiontitle">
-
+        <div class="container section">
+          <div class="sectiontitle">
             <div>
-                <div class="eyebrow">ماذا يمكنك أن تفعل؟</div>
+              <div class="eyebrow">ماذا يمكنك أن تفعل؟</div>
 
-                <h2>
-                    المعلومات المناخية،<br>
-                    تتحول إلى خطوات عملية.
-                </h2>
+              <h2>
+                المعلومات المناخية،<br />
+                تتحول إلى خطوات عملية.
+              </h2>
+            </div>
+          </div>
+
+          <div class="features">
+            <div class="feature">
+              <div class="ico">☼</div>
+              <h3>لوحة معلومات الطقس</h3>
+              <p>تابع درجات الحرارة والأمطار والرطوبة وسرعة الرياح الحالية.</p>
+              <button onclick="showPage('weather')">استكشف الطقس ←</button>
             </div>
 
-          
+            <div class="feature">
+              <div class="ico" style="background: #f0edfc; color: #8070c9">
+                ⌁
+              </div>
+              <h3>تقييم المخاطر</h3>
+              <p>
+                اطّلع على مؤشر توعوي مبسط للمخاطر اعتمادًا على بيانات الطقس.
+              </p>
+              <button onclick="showPage('risk')">افحص مستوى المخاطر ←</button>
+            </div>
 
+            <div class="feature">
+              <div class="ico" style="background: #fff3e5; color: #d9903e">
+                ⌖
+              </div>
+              <h3>بلاغات المجتمع</h3>
+              <p>شاهد المشكلات المناخية التي أبلغ عنها السكان وتابع حالتها.</p>
+              <button onclick="showPage('community')">اعرض البلاغات ←</button>
+            </div>
+
+            <div class="feature">
+              <div class="ico" style="background: #e7f6ef; color: #2c9b79">
+                ＋
+              </div>
+              <h3>أبلغ عن مشكلة</h3>
+              <p>شارك ملاحظة من منطقتك للمساهمة في زيادة وعي المجتمع.</p>
+              <button onclick="showPage('report')">أرسل بلاغًا ←</button>
+            </div>
+          </div>
         </div>
 
-        <div class="features">
-
-            <div class="feature">
-                <div class="ico">☼</div>
-                <h3>لوحة معلومات الطقس</h3>
-                <p>تابع درجات الحرارة والأمطار والرطوبة وسرعة الرياح الحالية.</p>
-                <button onclick="showPage('weather')">استكشف الطقس ←</button>
-            </div>
-
-            <div class="feature">
-                <div class="ico" style="background:#f0edfc;color:#8070c9">⌁</div>
-                <h3>تقييم المخاطر</h3>
-                <p>اطّلع على مؤشر توعوي مبسط للمخاطر اعتمادًا على بيانات الطقس.</p>
-                <button onclick="showPage('risk')">افحص مستوى المخاطر ←</button>
-            </div>
-
-            <div class="feature">
-                <div class="ico" style="background:#fff3e5;color:#d9903e">⌖</div>
-                <h3>بلاغات المجتمع</h3>
-                <p>شاهد المشكلات المناخية التي أبلغ عنها السكان وتابع حالتها.</p>
-                <button onclick="showPage('community')">اعرض البلاغات ←</button>
-            </div>
-
-            <div class="feature">
-                <div class="ico" style="background:#e7f6ef;color:#2c9b79">＋</div>
-                <h3>أبلغ عن مشكلة</h3>
-                <p>شارك ملاحظة من منطقتك للمساهمة في زيادة وعي المجتمع.</p>
-                <button onclick="showPage('report')">أرسل بلاغًا ←</button>
-            </div>
-
-        </div>
-    </div>
-
-    <div class="container callout">
-
-        <div>
+        <div class="container callout">
+          <div>
             <div class="eyebrow">مدينتك. صوتك.</div>
             <h2>لاحظت مشكلة؟ ساعد في إظهارها.</h2>
-            <p>أبلغ عن الأمطار الغزيرة أو تجمع المياه أو ارتفاع درجات الحرارة في منطقتك.</p>
+            <p>
+              أبلغ عن الأمطار الغزيرة أو تجمع المياه أو ارتفاع درجات الحرارة في
+              منطقتك.
+            </p>
+          </div>
+
+          <button class="btn primary" onclick="showPage('report')">
+            إرسال بلاغ ↗
+          </button>
         </div>
 
-        <button class="btn primary" onclick="showPage('report')">
-            إرسال بلاغ ↗
-        </button>
+        <div class="container disclaimer"></div>
+      </section>
 
-    </div>
-
-    <div class="container disclaimer">
-        
-    </div>
-
-</section>
-
-
-<!-- صفحة الطقس -->
-<section class="page" id="weather">
-
-    <div class="container">
-
-        <div class="pagehead">
+      <!-- صفحة الطقس -->
+      <section class="page" id="weather">
+        <div class="container">
+          <div class="pagehead">
             <div class="eyebrow">بيانات الطقس المباشرة</div>
             <h1><em>لوحة الطقس</em></h1>
             <p>
-                اختر أي مدينة أو استخدم موقعك الحالي لعرض
-                بيانات الطقس المتاحة.
+              اختر أي مدينة أو استخدم موقعك الحالي لعرض بيانات الطقس المتاحة.
             </p>
-        </div>
+          </div>
 
-        <div class="panel" style="margin-bottom:16px">
-
+          <div class="panel" style="margin-bottom: 16px">
             <div class="field">
-                <label for="location-search">ابحث عن مدينة أو منطقة</label>
+              <label for="location-search">ابحث عن مدينة أو منطقة</label>
 
-                <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <div style="display: flex; gap: 8px; flex-wrap: wrap">
+                <input
+                  id="location-search"
+                  placeholder="اكتب اسم المدينة أو المنطقة"
+                  style="
+                    flex: 1;
+                    min-width: 180px;
+                    border: 1px solid #dfe8eb;
+                    border-radius: 8px;
+                    padding: 11px;
+                  "
+                />
 
-                    <input
-                        id="location-search"
-                        placeholder="اكتب اسم المدينة أو المنطقة"
-                        style="flex:1;min-width:180px;border:1px solid #dfe8eb;border-radius:8px;padding:11px"
-                    >
+                <button
+                  class="btn primary"
+                  type="button"
+                  onclick="searchLocation()"
+                >
+                  بحث عن الموقع
+                </button>
 
-                    <button class="btn primary" type="button" onclick="searchLocation()">
-                        بحث عن الموقع
-                    </button>
-
-                    <button class="btn ghost" type="button" onclick="useCurrentLocation('weather')">
-                        استخدم موقعي الحالي
-                    </button>
-
-                </div>
+                <button
+                  class="btn ghost"
+                  type="button"
+                  onclick="useCurrentLocation('weather')"
+                >
+                  استخدم موقعي الحالي
+                </button>
+              </div>
             </div>
 
             <p class="notice">
-                يمكنك اختيار موقع من أي دولة. يتم استخدام الإحداثيات
-                للحصول على بيانات الطقس وعرض الخريطة.
+              يمكنك اختيار موقع من أي دولة. يتم استخدام الإحداثيات للحصول على
+              بيانات الطقس وعرض الخريطة.
             </p>
+          </div>
 
-        </div>
+          <div class="grid2">
+            <div
+              class="panel"
+              style="background: linear-gradient(140deg, #f1fbfd, #fff)"
+            >
+              <div class="label">
+                الحالة الحالية ·
+                <span id="weather-location-name">لم يتم تحديد موقع</span>
+              </div>
 
-        <div class="grid2">
+              <div class="temp" id="temperature">
+                --°<span style="font-size: 25px">م</span>
+              </div>
 
-            <div class="panel" style="background:linear-gradient(140deg,#f1fbfd,#fff)">
+              <p id="weatherstatus">
+                ابحث عن مدينة أو استخدم موقعك الحالي لعرض بيانات الطقس.
+              </p>
 
-                <div class="label">
-                    الحالة الحالية ·
-                    <span id="weather-location-name">لم يتم تحديد موقع</span>
+              <div class="metrics">
+                <div>
+                  💧
+                  <span>الرطوبة</span>
+                  <b id="humidity">--%</b>
                 </div>
 
-                <div class="temp" id="temperature">
-                    --°<span style="font-size:25px">م</span>
+                <div>
+                  🌧
+                  <span>الأمطار</span>
+                  <b id="precipitation">-- مم</b>
                 </div>
 
-                <p id="weatherstatus">
-                    ابحث عن مدينة أو استخدم موقعك الحالي لعرض بيانات الطقس.
-                </p>
-
-                <div class="metrics">
-
-                    <div>
-                        💧
-                        <span>الرطوبة</span>
-                        <b id="humidity">--%</b>
-                    </div>
-
-                    <div>
-                        🌧
-                        <span>الأمطار</span>
-                        <b id="precipitation">-- مم</b>
-                    </div>
-
-                    <div>
-                        ↗
-                        <span>سرعة الرياح</span>
-                        <b id="wind">-- كم/س</b>
-                    </div>
-
+                <div>
+                  ↗
+                  <span>سرعة الرياح</span>
+                  <b id="wind">-- كم/س</b>
                 </div>
+              </div>
 
-                <p class="notice" id="weatherstamp">
-                    مصدر البيانات: Open-Meteo
-                </p>
+              <p class="notice" id="weatherstamp">مصدر البيانات: Open-Meteo</p>
 
-                <button class="btn ghost small" onclick="loadWeather()">
-                    تحديث الطقس ↻
-                </button>
-
+              <button class="btn ghost small" onclick="loadWeather()">
+                تحديث الطقس ↻
+              </button>
             </div>
 
             <div class="panel">
+              <div class="label">لماذا هذا مهم؟</div>
 
-                <div class="label">لماذا هذا مهم؟</div>
+              <h2 style="font-size: 22px">ابقَ على اطلاع بتغيرات الطقس.</h2>
 
-                <h2 style="font-size:22px">
-                    ابقَ على اطلاع بتغيرات الطقس.
-                </h2>
+              <p>
+                تساعد معلومات الطقس السكان على فهم الظروف اليومية والاستعداد لها
+                بشكل مسؤول.
+              </p>
 
-                <p>
-                    تساعد معلومات الطقس السكان على فهم الظروف اليومية
-                    والاستعداد لها بشكل مسؤول.
-                </p>
-
-                <button class="btn primary" onclick="showPage('risk')">
-                    اعرض تقييم المخاطر ←
-                </button>
-
+              <button class="btn primary" onclick="showPage('risk')">
+                اعرض تقييم المخاطر ←
+              </button>
             </div>
-
+          </div>
         </div>
-    </div>
-</section>
+      </section>
 
-
-<!-- صفحة تحليل المخاطر -->
-<section class="page" id="risk">
-
-    <div class="container">
-
-        <div class="pagehead">
+      <!-- صفحة تحليل المخاطر -->
+      <section class="page" id="risk">
+        <div class="container">
+          <div class="pagehead">
             <div class="eyebrow">مؤشرات الطقس والمناخ</div>
             <h1>تقييم <em>المخاطر المناخية</em></h1>
             <p>
-                مؤشر استرشادي يعتمد على درجات الحرارة وبيانات الأمطار
-                واحتمالية هطولها في الموقع الذي تختاره.
+              مؤشر استرشادي يعتمد على درجات الحرارة وبيانات الأمطار واحتمالية
+              هطولها في الموقع الذي تختاره.
             </p>
-        </div>
+          </div>
 
-        <div class="grid2">
-
+          <div class="grid2">
             <div class="panel">
+              <div class="label">
+                <span id="risk-location-name">الموقع المحدد</span>
+                · البيانات الحالية
+              </div>
 
-                <div class="label">
-                    <span id="risk-location-name">الموقع المحدد</span>
-                    · البيانات الحالية
-                </div>
+              <h2 style="font-size: 20px">مؤشر يعتمد على حالة الطقس</h2>
 
-                <h2 style="font-size:20px">
-                    مؤشر يعتمد على حالة الطقس
-                </h2>
+              <div class="riskvalue" id="risklevel">لم يتم الحساب بعد</div>
 
-                <div class="riskvalue" id="risklevel">
-                    لم يتم الحساب بعد
-                </div>
+              <p id="risktext">اختر موقعًا لبدء حساب المؤشر.</p>
 
-                <p id="risktext">
-                    اختر موقعًا لبدء حساب المؤشر.
-                </p>
+              <div class="factor">
+                <span>درجة الحرارة</span>
+                <b id="rtemp">--</b>
+              </div>
 
-                <div class="factor">
-                    <span>درجة الحرارة</span>
-                    <b id="rtemp">--</b>
-                </div>
+              <div class="factor">
+                <span>كمية الأمطار حاليًا</span>
+                <b id="rrain">--</b>
+              </div>
 
-                <div class="factor">
-                    <span>كمية الأمطار حاليًا</span>
-                    <b id="rrain">--</b>
-                </div>
+              <div class="factor">
+                <span>احتمالية هطول الأمطار (الساعات القادمة)</span>
+                <b id="rprob">--</b>
+              </div>
 
-                <div class="factor">
-                    <span>احتمالية هطول الأمطار (الساعات القادمة)</span>
-                    <b id="rprob">--</b>
-                </div>
-
-                <button class="btn primary" onclick="calculateRisk()" style="margin-top:18px">
-                    احسب / حدّث ↻
-                </button>
-
+              <button
+                class="btn primary"
+                onclick="calculateRisk()"
+                style="margin-top: 18px"
+              >
+                احسب / حدّث ↻
+              </button>
             </div>
 
             <div class="panel">
+              <div class="label">منهجية التقييم</div>
 
-                <div class="label">منهجية التقييم</div>
+              <h2 style="font-size: 20px">كيف يتم تحديد مستوى المخاطر؟</h2>
 
-                <h2 style="font-size:20px">
-                    كيف يتم تحديد مستوى المخاطر؟
-                </h2>
+              <p>
+                <b>الحرارة:</b>
+                تُراعى درجات الحرارة المرتفعة عند تقييم مخاطر الحرارة.
+              </p>
 
-                <p>
-                    <b>الحرارة:</b>
-                    تُراعى درجات الحرارة المرتفعة عند تقييم مخاطر الحرارة.
-                </p>
+              <p>
+                <b>الأمطار:</b>
+                تُؤخذ كمية الأمطار الحالية واحتمالية هطولها خلال الساعات القادمة
+                في الاعتبار.
+              </p>
 
-                <p>
-                    <b>الأمطار:</b>
-                    تُؤخذ كمية الأمطار الحالية واحتمالية هطولها خلال
-                    الساعات القادمة في الاعتبار.
-                </p>
+              <p>
+                <b>مستوى المؤشر:</b>
+                تُجمع نتائج العوامل المحددة لتصنيف المستوى إلى منخفض أو متوسط أو
+                مرتفع.
+              </p>
 
-                <p>
-                    <b>مستوى المؤشر:</b>
-                    تُجمع نتائج العوامل المحددة لتصنيف المستوى إلى
-                    منخفض أو متوسط أو مرتفع.
-                </p>
-
-                <div class="disclaimer">
-                   
-                </div>
-
+              <div class="disclaimer"></div>
             </div>
-
+          </div>
         </div>
-    </div>
-</section>
+      </section>
 
-
-<!-- صفحة المجتمع -->
-<section class="page" id="community">
-
-    <div class="container">
-
-        <div class="pagehead">
-
+      <!-- صفحة المجتمع -->
+      <section class="page" id="community">
+        <div class="container">
+          <div class="pagehead">
             <div class="eyebrow">بلاغات المجتمع</div>
 
             <h1>لاحظ. شارك. <em>تابع.</em></h1>
 
             <p>
-                استعرض البلاغات الواردة من المناطق المختلفة
-                وتابع آخر المستجدات وحالة كل بلاغ.
+              استعرض البلاغات الواردة من المناطق المختلفة وتابع آخر المستجدات
+              وحالة كل بلاغ.
             </p>
 
             <button class="btn primary" onclick="showPage('report')">
-                ＋ أبلغ عن مشكلة
+              ＋ أبلغ عن مشكلة
             </button>
+          </div>
 
-        </div>
-
-        <div class="grid3" style="margin-bottom:18px">
-
+          <div class="grid3" style="margin-bottom: 18px">
             <div class="panel">
-                <div class="label">إجمالي البلاغات</div>
-                <h2 id="ctotal">0</h2>
+              <div class="label">إجمالي البلاغات</div>
+              <h2 id="ctotal">0</h2>
             </div>
 
             <div class="panel">
-                <div class="label">قيد الانتظار</div>
-                <h2 id="cpending">0</h2>
+              <div class="label">قيد الانتظار</div>
+              <h2 id="cpending">0</h2>
             </div>
 
             <div class="panel">
-                <div class="label">تم الحل</div>
-                <h2 id="cresolved">0</h2>
+              <div class="label">تم الحل</div>
+              <h2 id="cresolved">0</h2>
             </div>
+          </div>
 
-        </div>
-
-        <div class="panel">
-
+          <div class="panel">
             <h3>خريطة البلاغات والموقع المحدد</h3>
 
             <div class="mapbox">
-                <iframe
-                    id="community-map"
-                    src="about:blank"
-                    title="خريطة الموقع المحدد">
-                </iframe>
+              <iframe
+                id="community-map"
+                src="about:blank"
+                title="خريطة الموقع المحدد"
+              >
+              </iframe>
             </div>
 
             <p class="maphelp">
-                اختَر موقعًا من صفحة الطقس لعرضه على الخريطة.
-                تُحفظ إحداثيات كل بلاغ مع بياناته.
+              اختَر موقعًا من صفحة الطقس لعرضه على الخريطة. تُحفظ إحداثيات كل
+              بلاغ مع بياناته.
             </p>
+          </div>
 
-        </div>
-
-        <div class="panel" style="margin-top:18px">
+          <div class="panel" style="margin-top: 18px">
             <h3>أحدث البلاغات</h3>
             <div id="reportlist"></div>
+          </div>
         </div>
+      </section>
 
-    </div>
-</section>
-
-
-<!-- صفحة إرسال البلاغ -->
-<section class="page" id="report">
-
-    <div class="container">
-
-        <div class="pagehead">
-
+      <!-- صفحة إرسال البلاغ -->
+      <section class="page" id="report">
+        <div class="container">
+          <div class="pagehead">
             <div class="eyebrow">مشاركة المجتمع</div>
 
             <h1>أبلغ عن <em>مشكلة محلية</em></h1>
 
             <p>
-                شارك ما تلاحظه. يساعد بلاغك في إظهار المشكلات
-                المناخية المحلية والاهتمام بها.
+              شارك ما تلاحظه. يساعد بلاغك في إظهار المشكلات المناخية المحلية
+              والاهتمام بها.
             </p>
+          </div>
 
-        </div>
-
-        <div class="grid2">
-
+          <div class="grid2">
             <form class="panel" onsubmit="submitReport(event)">
+              <div class="field">
+                <label>نوع المشكلة</label>
+
+                <select id="category" required>
+                  <option value="">اختر نوع المشكلة</option>
+                  <option value="Heavy Rain">أمطار غزيرة</option>
+                  <option value="Water Accumulation">تجمع مياه</option>
+                  <option value="Extreme Heat">حرارة شديدة</option>
+                  <option value="Strong Wind">رياح قوية</option>
+                  <option value="Other">أخرى</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label>اسم المنطقة / الشارع</label>
+                <input
+                  id="area"
+                  placeholder="مثال: اسم الحي أو الشارع"
+                  required
+                />
+              </div>
+
+              <div class="field">
+                <label>وصف المشكلة</label>
+                <textarea
+                  id="description"
+                  placeholder="اشرح ما الذي لاحظته..."
+                  required
+                ></textarea>
+              </div>
+
+              <div class="field">
+                <label>إرفاق صورة (اختياري)</label>
+                <input
+                  accept="image/png,image/jpeg,image/webp"
+                  id="photo"
+                  type="file"
+                />
+              </div>
+
+              <div class="formrow">
+                <div class="field">
+                  <label>خط العرض</label>
+                  <input
+                    id="lat"
+                    type="number"
+                    step="any"
+                    placeholder="أدخل خط العرض"
+                    required
+                  />
+                </div>
 
                 <div class="field">
-                    <label>نوع المشكلة</label>
-
-                    <select id="category" required>
-                        <option value="">اختر نوع المشكلة</option>
-                        <option value="Heavy Rain">أمطار غزيرة</option>
-                        <option value="Water Accumulation">تجمع مياه</option>
-                        <option value="Extreme Heat">حرارة شديدة</option>
-                        <option value="Strong Wind">رياح قوية</option>
-                        <option value="Other">أخرى</option>
-                    </select>
+                  <label>خط الطول</label>
+                  <input
+                    id="lon"
+                    type="number"
+                    step="any"
+                    placeholder="أدخل خط الطول"
+                    required
+                  />
                 </div>
+              </div>
 
-                <div class="field">
-                    <label>اسم المنطقة / الشارع</label>
-                    <input id="area" placeholder="مثال: اسم الحي أو الشارع" required>
-                </div>
+              <button
+                class="btn ghost small"
+                type="button"
+                onclick="useCurrentLocation('report')"
+              >
+                استخدم موقعي الحالي لتحديد الإحداثيات
+              </button>
 
-                <div class="field">
-                    <label>وصف المشكلة</label>
-                    <textarea id="description" placeholder="اشرح ما الذي لاحظته..." required></textarea>
-                </div>
+              <p class="notice">
+                أدخل إحداثيات موقع المشكلة أو استخدم موقعك الحالي. يمكنك الإبلاغ
+                من أي مدينة أو منطقة.
+              </p>
 
-                <div class="field">
-                    <label>إرفاق صورة (اختياري)</label>
-                    <input accept="image/png,image/jpeg,image/webp" id="photo" type="file">
-                </div>
-
-                <div class="formrow">
-
-                    <div class="field">
-                        <label>خط العرض</label>
-                        <input id="lat" type="number" step="any" placeholder="أدخل خط العرض" required>
-                    </div>
-
-                    <div class="field">
-                        <label>خط الطول</label>
-                        <input id="lon" type="number" step="any" placeholder="أدخل خط الطول" required>
-                    </div>
-
-                </div>
-
-                <button
-                    class="btn ghost small"
-                    type="button"
-                    onclick="useCurrentLocation('report')">
-                    استخدم موقعي الحالي لتحديد الإحداثيات
-                </button>
-
-                <p class="notice">
-                    أدخل إحداثيات موقع المشكلة أو استخدم موقعك الحالي.
-                    يمكنك الإبلاغ من أي مدينة أو منطقة.
-                </p>
-
-                <button class="btn primary" type="submit">
-                    إرسال البلاغ ↗
-                </button>
-
+              <button class="btn primary" type="submit">إرسال البلاغ ↗</button>
             </form>
 
             <aside class="panel">
+              <div class="ico" style="background: #e7f6ef; color: #2c9b79">
+                ✓
+              </div>
 
-                <div class="ico" style="background:#e7f6ef;color:#2c9b79">
-                    ✓
-                </div>
+              <h3>قبل إرسال البلاغ</h3>
 
-                <h3>قبل إرسال البلاغ</h3>
+              <p>
+                شارك فقط الملاحظات التي يمكنك وصفها بوضوح. لا تعرض نفسك للخطر
+                لالتقاط صورة أو جمع معلومات.
+              </p>
 
-                <p>
-                    شارك فقط الملاحظات التي يمكنك وصفها بوضوح.
-                    لا تعرض نفسك للخطر لالتقاط صورة أو جمع معلومات.
-                </p>
+              <p>
+                يظهر البلاغ بعد إرساله في صفحة بلاغات المجتمع لجميع زوار الموقع.
+              </p>
 
-                <p>
-                    تتم مراجعة البلاغات الواردة من خلال فريق الإدارة،
-                    ثم تُحدّث حالتها وفقًا للإجراء المتخذ.
-                </p>
-
-                <div class="disclaimer">
-                    <b>سلامتك أولًا</b><br>
-                    لا تستخدم المنصة للإبلاغ عن حالات الطوارئ.
-                    في الحالات العاجلة، تواصل مباشرة مع الجهات المختصة.
-                </div>
-
+              <div class="disclaimer">
+                <b>سلامتك أولًا</b><br />
+                لا تستخدم المنصة للإبلاغ عن حالات الطوارئ. في الحالات العاجلة،
+                تواصل مباشرة مع الجهات المختصة.
+              </div>
             </aside>
-
+          </div>
         </div>
-    </div>
-</section>
+      </section>
+    </main>
 
-
-<!-- لوحة الإدارة -->
-<section class="page" id="admin">
-
-    <div class="container">
-
-        <div class="pagehead">
-
-            <div class="eyebrow">إدارة الموقع</div>
-
-            <h1>إدارة <em>البلاغات</em></h1>
-
-            <p>
-                راجع البلاغات الواردة، وتابع حالتها،
-                وحدّث الإجراءات المتخذة بشأنها.
-            </p>
-
-        </div>
-
-        <div class="panel tablewrap">
-
-            <div class="admin-toolbar">
-
-                <span class="notice">إجمالي البلاغات المسجلة</span>
-
-                <button class="btn danger small" onclick="clearAllReports()">
-                    حذف جميع البلاغات
-                </button>
-
-            </div>
-
-            <table class="table">
-
-                <thead>
-                    <tr>
-                        <th>البلاغ</th>
-                        <th>المنطقة</th>
-                        <th>التاريخ</th>
-                        <th>الحالة</th>
-                        <th>تحديث الحالة</th>
-                        <th>إجراء</th>
-                    </tr>
-                </thead>
-
-                <tbody id="admintable"></tbody>
-
-            </table>
-
-        </div>
-    </div>
-</section>
-
-
-<!-- تسجيل الدخول -->
-<section class="page" id="login">
-
-    <div class="container">
-
-        <form class="auth panel" onsubmit="login(event)">
-
-            <div class="eyebrow">مرحبًا بعودتك</div>
-
-            <h2>تسجيل الدخول إلى CLIMASENSE</h2>
-
-            <p class="muted">
-                سجّل الدخول لإرسال بلاغات المجتمع وإدارتها.
-            </p>
-
-            <div class="field">
-                <label>البريد الإلكتروني</label>
-                <input id="loginemail" type="email" placeholder="name@example.com" required>
-            </div>
-
-            <div class="field">
-                <label>كلمة المرور</label>
-                <input id="loginpass" type="password" placeholder="كلمة المرور" required>
-            </div>
-
-            <button class="btn primary" style="width:100%">
-                تسجيل الدخول
-            </button>
-
-            <p class="notice">
-                ليس لديك حساب؟
-                <a href="#register" style="color:var(--blue);font-weight:800">
-                    إنشاء حساب
-                </a>
-            </p>
-
-        </form>
-    </div>
-</section>
-
-
-<!-- إنشاء حساب -->
-<section class="page" id="register">
-
-    <div class="container">
-
-        <form class="auth panel" onsubmit="register(event)">
-
-            <div class="eyebrow">انضم إلى المجتمع</div>
-
-            <h2>أنشئ حسابك</h2>
-
-            <p class="muted">
-                انضم إلى المجتمع وشارك الملاحظات من منطقتك.
-            </p>
-
-            <div class="field">
-                <label>الاسم بالكامل</label>
-                <input id="regname" placeholder="اكتب اسمك" required>
-            </div>
-
-            <div class="field">
-                <label>البريد الإلكتروني</label>
-                <input id="regemail" type="email" placeholder="name@example.com" required>
-            </div>
-
-            <div class="field">
-                <label>كلمة المرور</label>
-                <input id="regpass" type="password" minlength="8" placeholder="8 أحرف على الأقل" required>
-            </div>
-
-            <button class="btn primary" style="width:100%">
-                إنشاء الحساب
-            </button>
-
-            <p class="notice">
-                لديك حساب بالفعل؟
-                <a href="#login" style="color:var(--blue);font-weight:800">
-                    تسجيل الدخول
-                </a>
-            </p>
-
-        </form>
-    </div>
-</section>
-
-</main>
-
-
-<footer>
-    <div class="container">
-
+    <footer>
+      <div class="container">
         <a class="brand" href="#home">
-            <span class="mark">C</span>CLIMA<b>SENSE</b>
+          <span class="mark">C</span>CLIMA<b>SENSE</b>
         </a>
+      </div>
+    </footer>
 
-     
-    
+    <div class="toast hidden" id="toast"></div>
 
-    </div>
-</footer>
+    <script>
+      /* إعداد قاعدة البيانات المشتركة.
+   أنشئي جدول reports في Supabase، ثم ضعي هنا Project URL و anon public key.
+   لا تضعي أبدًا service_role key داخل كود الواجهة. */
+      /* إعداد قاعدة البيانات المشتركة - ضعي بيانات مشروع Supabase هنا */
+      const SUPABASE_URL = "https://YOUR_PROJECT.supabase.co";
+      const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+      const REPORTS_TABLE = "reports";
 
-<div class="toast hidden" id="toast"></div>
+      let weatherData = null;
+      let selectedLocation = null;
 
+      function supabaseConfigured() {
+        return (
+          SUPABASE_URL.includes(".supabase.co") &&
+          !SUPABASE_URL.includes("YOUR_PROJECT") &&
+          SUPABASE_ANON_KEY !== "YOUR_SUPABASE_ANON_KEY"
+        );
+      }
 
-<script>
+      function supabaseHeaders(extra = {}) {
+        return {
+          apikey: SUPABASE_ANON_KEY,
+          Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+          ...extra,
+        };
+      }
 
-/* مفاتيح حفظ بيانات الموقع */
-const KEY = 'climasense_reports_global_v2';
-const USERS = 'climasense_users_global_v2';
-const SESSION = 'climasense_session_global_v2';
-
-let weatherData = null;
-let selectedLocation = null;
-
-
-/* قراءة البلاغات */
-function readReports() {
-    try {
-        return JSON.parse(localStorage.getItem(KEY) || '[]');
-    } catch {
-        return [];
-    }
-}
-
-
-/* حفظ البلاغات */
-function saveReports(reports) {
-    localStorage.setItem(KEY, JSON.stringify(reports));
-    renderReports();
-}
-
-
-/* معرفة المستخدم الحالي */
-function getUser() {
-    try {
-        return JSON.parse(localStorage.getItem(SESSION) || 'null');
-    } catch {
-        return null;
-    }
-}
-
-
-/* إظهار رسالة */
-function toast(message) {
-    const element = document.getElementById('toast');
-
-    element.textContent = message;
-    element.classList.remove('hidden');
-
-    setTimeout(() => {
-        element.classList.add('hidden');
-    }, 2600);
-}
-
-
-/* التنقل بين الصفحات */
-function showPage(id) {
-
-    document.querySelectorAll('.page').forEach(page => {
-        page.classList.remove('active');
-    });
-
-    let page = document.getElementById(id);
-
-    if (!page) {
-        id = 'home';
-        page = document.getElementById('home');
-    }
-
-    page.classList.add('active');
-
-    history.replaceState(null, '', '#' + id);
-
-    if (id === 'weather') {
-        loadWeather();
-    }
-
-    if (id === 'risk') {
-        calculateRisk();
-    }
-
-    if (id === 'community' || id === 'admin') {
-        renderReports();
-    }
-
-    window.scrollTo(0, 0);
-}
-
-window.addEventListener('hashchange', () => {
-    const id = location.hash.slice(1) || 'home';
-
-    if (document.getElementById(id)) {
-        showPage(id);
-    }
-});
-
-
-/* تحديث شريط المستخدم */
-function updateNav() {
-
-    const user = getUser();
-    const nav = document.getElementById('navuser');
-
-    if (!user) {
-
-        nav.innerHTML = `
-            <button class="btn ghost small" onclick="showPage('login')">
-                تسجيل الدخول
-            </button>
-
-            <button class="btn primary small" onclick="showPage('register')">
-                انضم إلينا
-            </button>
-        `;
-
-        return;
-    }
-
-    nav.innerHTML = `
-        <span class="muted">
-            مرحبًا، ${escapeHTML(user.name.split(' ')[0])}
-        </span>
-
-        ${user.role === 'admin'
-            ? `<button class="btn ghost small" onclick="showPage('admin')">الإدارة</button>`
-            : ''
+      /* جلب البلاغات من قاعدة البيانات المشتركة */
+      async function readReports() {
+        if (!supabaseConfigured()) {
+          throw new Error("يجب إعداد رابط Supabase ومفتاح Anon Key أولًا.");
         }
 
-        <button class="btn ghost small" onclick="logout()">
-            تسجيل الخروج
-        </button>
-    `;
-}
+        const response = await fetch(
+          `${SUPABASE_URL}/rest/v1/${REPORTS_TABLE}?select=*&order=id.desc`,
+          { headers: supabaseHeaders() },
+        );
 
+        if (!response.ok)
+          throw new Error("تعذر تحميل البلاغات من قاعدة البيانات.");
+        return await response.json();
+      }
 
-/* إنشاء حساب جديد */
-function register(event) {
+      /* إظهار رسالة */
 
-    event.preventDefault();
+      function toast(message) {
+        const element = document.getElementById("toast");
 
-    const users = JSON.parse(localStorage.getItem(USERS) || '[]');
+        element.textContent = message;
+        element.classList.remove("hidden");
 
-    const name = document.getElementById('regname').value.trim();
+        setTimeout(() => {
+          element.classList.add("hidden");
+        }, 2600);
+      }
 
-    const email = document.getElementById('regemail')
-        .value.trim().toLowerCase();
+      /* التنقل بين الصفحات */
+      function showPage(id) {
+        document.querySelectorAll(".page").forEach((page) => {
+          page.classList.remove("active");
+        });
 
-    const password = document.getElementById('regpass').value;
+        let page = document.getElementById(id);
 
-    if (users.some(user => user.email === email)) {
-        toast('هذا البريد الإلكتروني مسجل بالفعل.');
-        return;
-    }
+        if (!page) {
+          id = "home";
+          page = document.getElementById("home");
+        }
 
-    users.push({
-        name,
-        email,
-        password,
-        role: 'user'
-    });
+        page.classList.add("active");
 
-    localStorage.setItem(USERS, JSON.stringify(users));
+        history.replaceState(null, "", "#" + id);
 
-    toast('تم إنشاء الحساب بنجاح.');
+        if (id === "weather") {
+          loadWeather();
+        }
 
-    showPage('login');
-}
+        if (id === "risk") {
+          calculateRisk();
+        }
 
+        if (id === "community") {
+          renderReports();
+        }
 
-/* تسجيل الدخول */
-function login(event) {
+        window.scrollTo(0, 0);
+      }
 
-    event.preventDefault();
+      window.addEventListener("hashchange", () => {
+        const id = location.hash.slice(1) || "home";
 
-    const email = document.getElementById('loginemail')
-        .value.trim().toLowerCase();
+        if (document.getElementById(id)) {
+          showPage(id);
+        }
+      });
 
-    const password = document.getElementById('loginpass').value;
+      /* البحث عن مدينة أو منطقة */
+      async function searchLocation() {
+        const query = document.getElementById("location-search").value.trim();
 
-    let user = null;
+        if (!query) {
+          toast("اكتب اسم المدينة أو المنطقة أولًا.");
+          return;
+        }
 
-    if (
-        email === 'admin@climasense.local' &&
-        password === 'Admin123!'
-    ) {
+        toast("جارٍ البحث عن الموقع...");
 
-        user = {
-            name: 'CLIMASENSE Admin',
-            email,
-            role: 'admin'
+        try {
+          const url =
+            "https://geocoding-api.open-meteo.com/v1/search?name=" +
+            encodeURIComponent(query) +
+            "&count=1&language=ar&format=json";
+
+          const response = await fetch(url);
+
+          if (!response.ok) {
+            throw new Error("تعذر البحث عن الموقع");
+          }
+
+          const data = await response.json();
+
+          if (!data.results || !data.results.length) {
+            toast("لم يتم العثور على الموقع. جرّب اسمًا آخر.");
+            return;
+          }
+
+          const place = data.results[0];
+
+          const label = [place.name, place.admin1, place.country]
+            .filter(Boolean)
+            .join("، ");
+
+          setSelectedLocation(label, place.latitude, place.longitude);
+        } catch (error) {
+          toast("تعذر البحث عن الموقع. تحقق من اتصال الإنترنت.");
+        }
+      }
+
+      /* تعيين الموقع المختار */
+      function setSelectedLocation(name, latitude, longitude) {
+        selectedLocation = {
+          name: name,
+          lat: Number(latitude),
+          lon: Number(longitude),
         };
 
-    } else {
+        const weatherName = document.getElementById("weather-location-name");
 
-        const users = JSON.parse(localStorage.getItem(USERS) || '[]');
+        const riskName = document.getElementById("risk-location-name");
 
-        user = users.find(item =>
-            item.email === email &&
-            item.password === password
-        );
-    }
-
-    if (!user) {
-        toast('البريد الإلكتروني أو كلمة المرور غير صحيحة.');
-        return;
-    }
-
-    localStorage.setItem(SESSION, JSON.stringify(user));
-
-    updateNav();
-
-    toast('أهلًا بك في CLIMASENSE!');
-
-    showPage(user.role === 'admin' ? 'admin' : 'community');
-}
-
-
-/* تسجيل الخروج */
-function logout() {
-
-    localStorage.removeItem(SESSION);
-
-    updateNav();
-
-    toast('تم تسجيل الخروج.');
-
-    showPage('home');
-}
-
-
-/* البحث عن مدينة أو منطقة */
-async function searchLocation() {
-
-    const query = document.getElementById('location-search')
-        .value.trim();
-
-    if (!query) {
-        toast('اكتب اسم المدينة أو المنطقة أولًا.');
-        return;
-    }
-
-    toast('جارٍ البحث عن الموقع...');
-
-    try {
-
-        const url =
-            'https://geocoding-api.open-meteo.com/v1/search?name=' +
-            encodeURIComponent(query) +
-            '&count=1&language=ar&format=json';
-
-        const response = await fetch(url);
-
-        if (!response.ok) {
-            throw new Error('تعذر البحث عن الموقع');
+        if (weatherName) {
+          weatherName.textContent = name;
         }
 
-        const data = await response.json();
-
-        if (!data.results || !data.results.length) {
-            toast('لم يتم العثور على الموقع. جرّب اسمًا آخر.');
-            return;
+        if (riskName) {
+          riskName.textContent = name;
         }
 
-        const place = data.results[0];
+        /* تحديث الخريطة حسب الموقع */
+        const map = document.getElementById("community-map");
 
-        const label = [
-            place.name,
-            place.admin1,
-            place.country
-        ].filter(Boolean).join('، ');
+        if (map) {
+          const padding = 0.12;
 
-        setSelectedLocation(
-            label,
-            place.latitude,
-            place.longitude
-        );
-
-    } catch (error) {
-
-        toast('تعذر البحث عن الموقع. تحقق من اتصال الإنترنت.');
-
-    }
-}
-
-
-/* تعيين الموقع المختار */
-function setSelectedLocation(name, latitude, longitude) {
-
-    selectedLocation = {
-        name: name,
-        lat: Number(latitude),
-        lon: Number(longitude)
-    };
-
-    const weatherName =
-        document.getElementById('weather-location-name');
-
-    const riskName =
-        document.getElementById('risk-location-name');
-
-    if (weatherName) {
-        weatherName.textContent = name;
-    }
-
-    if (riskName) {
-        riskName.textContent = name;
-    }
-
-    /* تحديث الخريطة حسب الموقع */
-    const map = document.getElementById('community-map');
-
-    if (map) {
-
-        const padding = 0.12;
-
-        const bbox = [
+          const bbox = [
             selectedLocation.lon - padding,
             selectedLocation.lat - padding,
             selectedLocation.lon + padding,
-            selectedLocation.lat + padding
-        ].join('%2C');
+            selectedLocation.lat + padding,
+          ].join("%2C");
 
-        map.src =
-            'https://www.openstreetmap.org/export/embed.html?bbox=' +
+          map.src =
+            "https://www.openstreetmap.org/export/embed.html?bbox=" +
             bbox +
-            '&layer=mapnik&marker=' +
+            "&layer=mapnik&marker=" +
             selectedLocation.lat +
-            '%2C' +
+            "%2C" +
             selectedLocation.lon;
-    }
+        }
 
-    const latitudeField = document.getElementById('lat');
-    const longitudeField = document.getElementById('lon');
+        const latitudeField = document.getElementById("lat");
+        const longitudeField = document.getElementById("lon");
 
-    if (latitudeField && longitudeField) {
+        if (latitudeField && longitudeField) {
+          latitudeField.value = selectedLocation.lat.toFixed(6);
+          longitudeField.value = selectedLocation.lon.toFixed(6);
+        }
 
-        latitudeField.value = selectedLocation.lat.toFixed(6);
-        longitudeField.value = selectedLocation.lon.toFixed(6);
-    }
+        loadWeather();
 
-    loadWeather();
+        toast("تم تحديد الموقع: " + name);
+      }
 
-    toast('تم تحديد الموقع: ' + name);
-}
+      /* استخدام الموقع الحالي */
+      function useCurrentLocation(target) {
+        if (!navigator.geolocation) {
+          toast("المتصفح لا يدعم تحديد الموقع.");
+          return;
+        }
 
+        toast("جارٍ تحديد موقعك الحالي...");
 
-/* استخدام الموقع الحالي */
-function useCurrentLocation(target) {
-
-    if (!navigator.geolocation) {
-        toast('المتصفح لا يدعم تحديد الموقع.');
-        return;
-    }
-
-    toast('جارٍ تحديد موقعك الحالي...');
-
-    navigator.geolocation.getCurrentPosition(
-
-        position => {
-
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
             const latitude = position.coords.latitude;
             const longitude = position.coords.longitude;
 
-            if (target === 'report') {
+            if (target === "report") {
+              document.getElementById("lat").value = latitude.toFixed(6);
 
-                document.getElementById('lat').value =
-                    latitude.toFixed(6);
+              document.getElementById("lon").value = longitude.toFixed(6);
 
-                document.getElementById('lon').value =
-                    longitude.toFixed(6);
-
-                toast('تم تحديد إحداثيات موقع البلاغ.');
-
+              toast("تم تحديد إحداثيات موقع البلاغ.");
             } else {
-
-                setSelectedLocation(
-                    'موقعي الحالي',
-                    latitude,
-                    longitude
-                );
-
+              setSelectedLocation("موقعي الحالي", latitude, longitude);
             }
-        },
+          },
 
-        () => {
-
+          () => {
             toast(
-                'لم نتمكن من تحديد موقعك. اسمح للمتصفح بالوصول إلى الموقع أو أدخل الإحداثيات يدويًا.'
+              "لم نتمكن من تحديد موقعك. اسمح للمتصفح بالوصول إلى الموقع أو أدخل الإحداثيات يدويًا.",
             );
+          },
 
-        },
-
-        {
+          {
             enableHighAccuracy: true,
-            timeout: 10000
+            timeout: 10000,
+          },
+        );
+      }
+
+      /* إرسال بلاغ جديد بدون تسجيل دخول */
+      async function submitReport(event) {
+        event.preventDefault();
+
+        if (!supabaseConfigured()) {
+          toast("الموقع يحتاج إلى ربط قاعدة البيانات أولًا.");
+          return;
         }
-    );
-}
 
+        const category = document.getElementById("category").value;
+        const area = document.getElementById("area").value.trim();
+        const description = document.getElementById("description").value.trim();
+        const latitudeText = document.getElementById("lat").value;
+        const longitudeText = document.getElementById("lon").value;
+        const latitude = Number(latitudeText);
+        const longitude = Number(longitudeText);
+        const file = document.getElementById("photo").files[0];
 
-/* إرسال بلاغ جديد */
-function submitReport(event) {
+        if (
+          !latitudeText ||
+          !longitudeText ||
+          !Number.isFinite(latitude) ||
+          !Number.isFinite(longitude) ||
+          latitude < -90 ||
+          latitude > 90 ||
+          longitude < -180 ||
+          longitude > 180
+        ) {
+          toast("من فضلك أدخل إحداثيات صحيحة.");
+          return;
+        }
 
-    event.preventDefault();
+        if (file && file.size > 2 * 1024 * 1024) {
+          toast("من فضلك اختر صورة أصغر من 2 ميجابايت.");
+          return;
+        }
 
-    const user = getUser();
+        const submitButton = event.target.querySelector(
+          'button[type="submit"]',
+        );
+        submitButton.disabled = true;
+        submitButton.textContent = "جارٍ إرسال البلاغ...";
 
-    if (!user) {
+        try {
+          let image = null;
+          if (file) {
+            image = await new Promise((resolve, reject) => {
+              const reader = new FileReader();
+              reader.onload = () => resolve(reader.result);
+              reader.onerror = reject;
+              reader.readAsDataURL(file);
+            });
+          }
 
-        toast('سجّل الدخول قبل إرسال البلاغ.');
-
-        showPage('login');
-
-        return;
-    }
-
-    const category =
-        document.getElementById('category').value;
-
-    const area =
-        document.getElementById('area').value.trim();
-
-    const description =
-        document.getElementById('description').value.trim();
-
-    const latitudeText =
-        document.getElementById('lat').value;
-
-    const longitudeText =
-        document.getElementById('lon').value;
-
-    const latitude = Number(latitudeText);
-    const longitude = Number(longitudeText);
-
-    const file =
-        document.getElementById('photo').files[0];
-
-    if (
-        !latitudeText ||
-        !longitudeText ||
-        !Number.isFinite(latitude) ||
-        !Number.isFinite(longitude) ||
-        latitude < -90 ||
-        latitude > 90 ||
-        longitude < -180 ||
-        longitude > 180
-    ) {
-
-        toast('من فضلك أدخل إحداثيات صحيحة.');
-
-        return;
-    }
-
-    function finish(image) {
-
-        const reports = readReports();
-
-        reports.unshift({
-
-            id: Date.now(),
-
-            category: category,
-
-            area: area,
-
-            description: description,
-
+          const report = {
+            category,
+            area,
+            description,
             lat: latitude,
-
             lon: longitude,
+            image,
+            status: "Pending",
+            created: new Date().toLocaleString("ar-EG"),
+            by: "زائر",
+          };
 
-            image: image,
+          const response = await fetch(
+            `${SUPABASE_URL}/rest/v1/${REPORTS_TABLE}`,
+            {
+              method: "POST",
+              headers: supabaseHeaders({
+                "Content-Type": "application/json",
+                Prefer: "return=minimal",
+              }),
+              body: JSON.stringify(report),
+            },
+          );
 
-            status: 'Pending',
+          if (!response.ok) {
+            const details = await response.text();
+            throw new Error(details || "تعذر حفظ البلاغ.");
+          }
 
-            created: new Date().toLocaleString('ar-EG'),
-
-            by: user.name
-
-        });
-
-        saveReports(reports);
-
-        event.target.reset();
-
-        document.getElementById('lat').value = '';
-        document.getElementById('lon').value = '';
-
-        toast('تم تسجيل البلاغ بنجاح.');
-
-        showPage('community');
-    }
-
-
-    if (file) {
-
-        if (file.size > 2 * 1024 * 1024) {
-
-            toast('من فضلك اختر صورة أصغر من 2 ميجابايت.');
-
-            return;
+          event.target.reset();
+          document.getElementById("lat").value = "";
+          document.getElementById("lon").value = "";
+          toast("تم إرسال البلاغ بنجاح، وأصبح متاحًا للجميع.");
+          await renderReports();
+          showPage("community");
+        } catch (error) {
+          console.error(error);
+          toast(error.message || "حدث خطأ أثناء إرسال البلاغ.");
+        } finally {
+          submitButton.disabled = false;
+          submitButton.textContent = "إرسال البلاغ ↗";
         }
+      }
 
-        const reader = new FileReader();
+      /* ترجمة أنواع البلاغات */
+      function categoryArabic(value) {
+        const names = {
+          "Heavy Rain": "أمطار غزيرة",
 
-        reader.onload = () => {
-            finish(reader.result);
+          "Water Accumulation": "تجمع مياه",
+
+          "Extreme Heat": "حرارة شديدة",
+
+          "Strong Wind": "رياح قوية",
+
+          Other: "أخرى",
         };
 
-        reader.readAsDataURL(file);
+        return names[value] || value;
+      }
 
-    } else {
+      /* ترجمة حالات البلاغات */
+      function statusArabic(value) {
+        const names = {
+          Pending: "قيد الانتظار",
 
-        finish(null);
+          Verified: "تم التحقق",
 
-    }
-}
+          "In Progress": "جارٍ العمل",
 
+          Resolved: "تم الحل",
+        };
 
-/* ترجمة أنواع البلاغات */
-function categoryArabic(value) {
+        return names[value] || value;
+      }
 
-    const names = {
+      /* عرض البلاغات العامة والإحصائيات */
+      async function renderReports() {
+        const list = document.getElementById("reportlist");
+        if (!list) return;
 
-        'Heavy Rain': 'أمطار غزيرة',
-
-        'Water Accumulation': 'تجمع مياه',
-
-        'Extreme Heat': 'حرارة شديدة',
-
-        'Strong Wind': 'رياح قوية',
-
-        'Other': 'أخرى'
-
-    };
-
-    return names[value] || value;
-}
-
-
-/* ترجمة حالات البلاغات */
-function statusArabic(value) {
-
-    const names = {
-
-        'Pending': 'قيد الانتظار',
-
-        'Verified': 'تم التحقق',
-
-        'In Progress': 'جارٍ العمل',
-
-        'Resolved': 'تم الحل'
-
-    };
-
-    return names[value] || value;
-}
-
-
-/* عرض البلاغات والإحصائيات */
-function renderReports() {
-
-    const reports = readReports();
-
-    const pending =
-        reports.filter(item => item.status === 'Pending').length;
-
-    const resolved =
-        reports.filter(item => item.status === 'Resolved').length;
-
-
-    document.getElementById('statreports').textContent =
-        reports.length;
-
-    document.getElementById('ctotal').textContent =
-        reports.length;
-
-    document.getElementById('statpending').textContent =
-        pending;
-
-    document.getElementById('cpending').textContent =
-        pending;
-
-    document.getElementById('statresolved').textContent =
-        resolved;
-
-    document.getElementById('cresolved').textContent =
-        resolved;
-
-
-    /* قائمة أحدث البلاغات */
-    const list = document.getElementById('reportlist');
-
-    list.innerHTML = reports.length
-
-        ? reports.slice(0, 40).map(item => `
-
-            <div class="report">
-
-                <div class="ico">⌖</div>
-
-                <div class="desc">
-
-                    <h4>
-                        ${escapeHTML(categoryArabic(item.category))}
-                        ·
-                        ${escapeHTML(item.area)}
-                    </h4>
-
-                    <p>
-                        ${escapeHTML(item.description)}
-                        <br>
-
-                        <span class="notice">
-                            ${escapeHTML(item.created)}
-                            ·
-                            ${escapeHTML(item.by || 'عضو بالمجتمع')}
-                            ·
-                            ${item.lat}, ${item.lon}
-                        </span>
-                    </p>
-
-                    ${item.image
-                        ? `<img src="${item.image}" style="max-width:120px;max-height:90px;border-radius:7px;margin-top:8px">`
-                        : ''
-                    }
-
-                </div>
-
-                <span class="tag ${item.status.replace(' ', '-')}">
-                    ${escapeHTML(statusArabic(item.status))}
-                </span>
-
-            </div>
-
-        `).join('')
-
-        : '<div class="empty">لا توجد بلاغات حتى الآن. كن أول من يشارك ملاحظة من منطقته.</div>';
-
-
-    /* جدول الإدارة */
-    const table = document.getElementById('admintable');
-
-    if (!table) return;
-
-    table.innerHTML = reports.length
-
-        ? reports.map(item => `
-
-            <tr>
-
-                <td>
-                    <b>${escapeHTML(categoryArabic(item.category))}</b>
-                    <br>
-                    ${escapeHTML(item.description)}
-                    ${item.image ? '<br><small>مرفق صورة</small>' : ''}
-                </td>
-
-                <td>
-                    ${escapeHTML(item.area)}
-                    <br>
-                    <small>${item.lat}, ${item.lon}</small>
-                </td>
-
-                <td>${escapeHTML(item.created)}</td>
-
-                <td>
-                    <span class="tag ${item.status.replace(' ', '-')}">
-                        ${escapeHTML(statusArabic(item.status))}
-                    </span>
-                </td>
-
-                <td>
-
-                    <select onchange="changeStatus(${item.id}, this.value)">
-
-                        <option value="Pending" ${item.status === 'Pending' ? 'selected' : ''}>
-                            قيد الانتظار
-                        </option>
-
-                        <option value="Verified" ${item.status === 'Verified' ? 'selected' : ''}>
-                            تم التحقق
-                        </option>
-
-                        <option value="In Progress" ${item.status === 'In Progress' ? 'selected' : ''}>
-                            جارٍ العمل
-                        </option>
-
-                        <option value="Resolved" ${item.status === 'Resolved' ? 'selected' : ''}>
-                            تم الحل
-                        </option>
-
-                    </select>
-
-                </td>
-
-                <td>
-                    <button class="delete-btn" onclick="deleteReport(${item.id})">
-                        حذف
-                    </button>
-                </td>
-
-            </tr>
-
-        `).join('')
-
-        : '<tr><td colspan="6">لا توجد بلاغات مسجلة.</td></tr>';
-}
-
-
-/* تغيير حالة البلاغ */
-function changeStatus(id, status) {
-
-    if (getUser()?.role !== 'admin') {
-
-        toast('يلزم الدخول بحساب الإدارة.');
-
-        return;
-    }
-
-    const reports = readReports();
-
-    const report = reports.find(item => item.id === id);
-
-    if (report) {
-
-        report.status = status;
-
-        saveReports(reports);
-
-        toast('تم تحديث حالة البلاغ.');
-    }
-}
-
-
-/* حذف بلاغ */
-function deleteReport(id) {
-
-    if (getUser()?.role !== 'admin') {
-
-        toast('يلزم الدخول بحساب الإدارة.');
-
-        return;
-    }
-
-    const reports = readReports();
-
-    const report = reports.find(item => item.id === id);
-
-    if (!report) return;
-
-    if (!confirm('هل تريد حذف هذا البلاغ والصورة المرفقة به نهائيًا؟')) {
-        return;
-    }
-
-    saveReports(
-        reports.filter(item => item.id !== id)
-    );
-
-    toast('تم حذف البلاغ والمرفق بنجاح.');
-}
-
-
-/* حذف جميع البلاغات */
-function clearAllReports() {
-
-    if (getUser()?.role !== 'admin') {
-
-        toast('يلزم الدخول بحساب الإدارة.');
-
-        return;
-    }
-
-    if (!readReports().length) {
-
-        toast('لا توجد بلاغات لحذفها.');
-
-        return;
-    }
-
-    if (!confirm('سيتم حذف جميع البلاغات والصور المرفقة بها نهائيًا. هل تريد المتابعة؟')) {
-        return;
-    }
-
-    saveReports([]);
-
-    toast('تم حذف جميع البلاغات والمرفقات.');
-}
-
-
-/* حماية النصوص عند عرضها */
-function escapeHTML(value) {
-
-    return String(value ?? '').replace(/[&<>"']/g, character => ({
-
-        '&': '&amp;',
-
-        '<': '&lt;',
-
-        '>': '&gt;',
-
-        '"': '&quot;',
-
-        "'": '&#039;'
-
-    }[character]));
-}
-
-
-/* البحث عن بيانات الطقس للموقع المختار */
-async function loadWeather() {
-
-    const message =
-        document.getElementById('weatherstatus');
-
-    if (!selectedLocation) {
-
-        message.textContent =
-            'ابحث عن مدينة أو استخدم موقعك الحالي لعرض بيانات الطقس.';
-
-        document.getElementById('weatherstamp').textContent =
-            'اختر موقعًا أولًا لعرض البيانات.';
-
-        return;
-    }
-
-    message.textContent = 'جارٍ تحميل حالة الطقس المباشرة...';
-
-    try {
-
-        const url =
-            'https://api.open-meteo.com/v1/forecast?latitude=' +
-            selectedLocation.lat +
-            '&longitude=' +
-            selectedLocation.lon +
-            '&current=temperature_2m,relative_humidity_2m,precipitation,wind_speed_10m' +
-            '&hourly=precipitation_probability,precipitation' +
-            '&forecast_days=1&timezone=auto';
-
-        const response = await fetch(url);
-
-        if (!response.ok) {
-            throw new Error('خدمة الطقس غير متاحة');
+        if (!supabaseConfigured()) {
+          list.innerHTML =
+            '<div class="empty">اربط قاعدة بيانات Supabase لعرض البلاغات المشتركة بين جميع الزوار.</div>';
+          return;
         }
 
-        const data = await response.json();
+        list.innerHTML = '<div class="empty">جارٍ تحميل البلاغات...</div>';
 
-        weatherData = data;
+        try {
+          const reports = await readReports();
+          const pending = reports.filter(
+            (item) => item.status === "Pending",
+          ).length;
+          const resolved = reports.filter(
+            (item) => item.status === "Resolved",
+          ).length;
 
-        const current = data.current;
+          document.getElementById("statreports").textContent = reports.length;
+          document.getElementById("ctotal").textContent = reports.length;
+          document.getElementById("statpending").textContent = pending;
+          document.getElementById("cpending").textContent = pending;
+          document.getElementById("statresolved").textContent = resolved;
+          document.getElementById("cresolved").textContent = resolved;
 
-        document.getElementById('temperature').innerHTML =
+          list.innerHTML = reports.length
+            ? reports
+                .slice(0, 100)
+                .map(
+                  (item) => `
+                <div class="report">
+                    <div class="ico">⌖</div>
+                    <div class="desc">
+                        <h4>${escapeHTML(categoryArabic(item.category))} · ${escapeHTML(item.area)}</h4>
+                        <p>
+                            ${escapeHTML(item.description)}
+                            <br>
+                            <span class="notice">
+                                ${escapeHTML(item.created || "")}
+                                · ${escapeHTML(item.by || "زائر")}
+                                · ${escapeHTML(item.lat)}, ${escapeHTML(item.lon)}
+                            </span>
+                        </p>
+                        ${
+                          item.image
+                            ? `<img src="${item.image}" alt="صورة البلاغ" style="max-width:120px;max-height:90px;border-radius:7px;margin-top:8px">`
+                            : ""
+                        }
+                    </div>
+                    <span class="tag ${(item.status || "Pending").replace(" ", "-")}">
+                        ${escapeHTML(statusArabic(item.status || "Pending"))}
+                    </span>
+                </div>
+            `,
+                )
+                .join("")
+            : '<div class="empty">لا توجد بلاغات حتى الآن. كن أول من يشارك ملاحظة من منطقته.</div>';
+        } catch (error) {
+          console.error(error);
+          list.innerHTML =
+            '<div class="empty">تعذر تحميل البلاغات. تأكدي من إعداد قاعدة البيانات واتصال الإنترنت.</div>';
+        }
+      }
+
+      /* حماية النصوص عند عرضها */
+
+      function escapeHTML(value) {
+        return String(value ?? "").replace(
+          /[&<>"']/g,
+          (character) =>
+            ({
+              "&": "&amp;",
+
+              "<": "&lt;",
+
+              ">": "&gt;",
+
+              '"': "&quot;",
+
+              "'": "&#039;",
+            })[character],
+        );
+      }
+
+      /* البحث عن بيانات الطقس للموقع المختار */
+      async function loadWeather() {
+        const message = document.getElementById("weatherstatus");
+
+        if (!selectedLocation) {
+          message.textContent =
+            "ابحث عن مدينة أو استخدم موقعك الحالي لعرض بيانات الطقس.";
+
+          document.getElementById("weatherstamp").textContent =
+            "اختر موقعًا أولًا لعرض البيانات.";
+
+          return;
+        }
+
+        message.textContent = "جارٍ تحميل حالة الطقس المباشرة...";
+
+        try {
+          const url =
+            "https://api.open-meteo.com/v1/forecast?latitude=" +
+            selectedLocation.lat +
+            "&longitude=" +
+            selectedLocation.lon +
+            "&current=temperature_2m,relative_humidity_2m,precipitation,wind_speed_10m" +
+            "&hourly=precipitation_probability,precipitation" +
+            "&forecast_days=1&timezone=auto";
+
+          const response = await fetch(url);
+
+          if (!response.ok) {
+            throw new Error("خدمة الطقس غير متاحة");
+          }
+
+          const data = await response.json();
+
+          weatherData = data;
+
+          const current = data.current;
+
+          document.getElementById("temperature").innerHTML =
             Math.round(current.temperature_2m) +
             '°<span style="font-size:25px">م</span>';
 
-        document.getElementById('humidity').textContent =
-            current.relative_humidity_2m + '%';
+          document.getElementById("humidity").textContent =
+            current.relative_humidity_2m + "%";
 
-        document.getElementById('precipitation').textContent =
-            current.precipitation + ' مم';
+          document.getElementById("precipitation").textContent =
+            current.precipitation + " مم";
 
-        document.getElementById('wind').textContent =
-            current.wind_speed_10m + ' كم/س';
+          document.getElementById("wind").textContent =
+            current.wind_speed_10m + " كم/س";
 
-        message.textContent =
-            'أحدث بيانات الطقس المتاحة للموقع المحدد.';
+          message.textContent = "أحدث بيانات الطقس المتاحة للموقع المحدد.";
 
-        document.getElementById('weatherstamp').textContent =
-            'المصدر: Open-Meteo · آخر تحديث: ' +
-            (current.time || 'الآن');
+          document.getElementById("weatherstamp").textContent =
+            "المصدر: Open-Meteo · آخر تحديث: " + (current.time || "الآن");
 
-        if (
-            document.getElementById('risk').classList.contains('active')
-        ) {
+          if (document.getElementById("risk").classList.contains("active")) {
             renderRisk();
+          }
+        } catch (error) {
+          message.textContent =
+            "بيانات الطقس غير متاحة حاليًا. تحقق من اتصال الإنترنت ثم حاول التحديث.";
+
+          document.getElementById("weatherstamp").textContent =
+            "تعذر استلام بيانات الطقس الحالية.";
+
+          toast("تعذر تحميل بيانات الطقس.");
+        }
+      }
+
+      /* حساب مؤشر المخاطر */
+      function renderRisk() {
+        if (!weatherData) return;
+
+        const current = weatherData.current;
+
+        const probabilities =
+          weatherData.hourly?.precipitation_probability?.slice(0, 6) || [];
+
+        const probability = probabilities.length
+          ? Math.max(...probabilities)
+          : 0;
+
+        let score = 0;
+
+        if (current.temperature_2m >= 38) {
+          score += 2;
+        } else if (current.temperature_2m >= 33) {
+          score += 1;
         }
 
-    } catch (error) {
+        if (current.precipitation >= 10) {
+          score += 2;
+        } else if (current.precipitation >= 2) {
+          score += 1;
+        }
 
-        message.textContent =
-            'بيانات الطقس غير متاحة حاليًا. تحقق من اتصال الإنترنت ثم حاول التحديث.';
+        if (probability >= 70) {
+          score += 2;
+        } else if (probability >= 40) {
+          score += 1;
+        }
 
-        document.getElementById('weatherstamp').textContent =
-            'تعذر استلام بيانات الطقس الحالية.';
+        let level = "Low";
 
-        toast('تعذر تحميل بيانات الطقس.');
+        if (score >= 4) {
+          level = "High";
+        } else if (score >= 2) {
+          level = "Medium";
+        }
 
-    }
-}
+        const element = document.getElementById("risklevel");
 
+        element.textContent =
+          level === "High"
+            ? "مخاطر مرتفعة"
+            : level === "Medium"
+              ? "مخاطر متوسطة"
+              : "مخاطر منخفضة";
 
-/* حساب مؤشر المخاطر */
-function renderRisk() {
+        element.className = "riskvalue " + level.toLowerCase();
 
-    if (!weatherData) return;
+        document.getElementById("risktext").textContent =
+          "مستوى المؤشر وفقًا لدرجة التقييم " + score + " من 6.";
 
-    const current = weatherData.current;
+        document.getElementById("rtemp").textContent =
+          current.temperature_2m + " °م";
 
-    const probabilities =
-        weatherData.hourly?.precipitation_probability?.slice(0, 6) || [];
+        document.getElementById("rrain").textContent =
+          current.precipitation + " مم";
 
-    const probability = probabilities.length
-        ? Math.max(...probabilities)
-        : 0;
+        document.getElementById("rprob").textContent = probability + "%";
+      }
 
-    let score = 0;
+      /* تحديث حساب المخاطر */
+      async function calculateRisk() {
+        if (!selectedLocation) {
+          document.getElementById("risklevel").textContent = "حدد موقعًا أولًا";
 
-    if (current.temperature_2m >= 38) {
-        score += 2;
-    } else if (current.temperature_2m >= 33) {
-        score += 1;
-    }
+          document.getElementById("risktext").textContent =
+            "انتقل إلى صفحة الطقس وابحث عن مدينة أو استخدم موقعك الحالي.";
 
-    if (current.precipitation >= 10) {
-        score += 2;
-    } else if (current.precipitation >= 2) {
-        score += 1;
-    }
+          return;
+        }
 
-    if (probability >= 70) {
-        score += 2;
-    } else if (probability >= 40) {
-        score += 1;
-    }
+        if (!weatherData) {
+          await loadWeather();
+        }
 
-    let level = 'Low';
+        if (weatherData) {
+          renderRisk();
+        } else {
+          document.getElementById("risklevel").textContent = "غير متاح";
 
-    if (score >= 4) {
-        level = 'High';
-    } else if (score >= 2) {
-        level = 'Medium';
-    }
+          document.getElementById("risktext").textContent =
+            "تعذر الحصول على بيانات الطقس، لذلك لا يمكن حساب مؤشر المخاطر.";
+        }
+      }
 
-    const element = document.getElementById('risklevel');
+      /* تشغيل الموقع */
+      renderReports();
 
-    element.textContent =
-        level === 'High'
-            ? 'مخاطر مرتفعة'
-            : level === 'Medium'
-                ? 'مخاطر متوسطة'
-                : 'مخاطر منخفضة';
-
-    element.className =
-        'riskvalue ' + level.toLowerCase();
-
-    document.getElementById('risktext').textContent =
-        'مستوى المؤشر وفقًا لدرجة التقييم ' + score + ' من 6.';
-
-    document.getElementById('rtemp').textContent =
-        current.temperature_2m + ' °م';
-
-    document.getElementById('rrain').textContent =
-        current.precipitation + ' مم';
-
-    document.getElementById('rprob').textContent =
-        probability + '%';
-}
-
-
-/* تحديث حساب المخاطر */
-async function calculateRisk() {
-
-    if (!selectedLocation) {
-
-        document.getElementById('risklevel').textContent =
-            'حدد موقعًا أولًا';
-
-        document.getElementById('risktext').textContent =
-            'انتقل إلى صفحة الطقس وابحث عن مدينة أو استخدم موقعك الحالي.';
-
-        return;
-    }
-
-    if (!weatherData) {
-        await loadWeather();
-    }
-
-    if (weatherData) {
-
-        renderRisk();
-
-    } else {
-
-        document.getElementById('risklevel').textContent =
-            'غير متاح';
-
-        document.getElementById('risktext').textContent =
-            'تعذر الحصول على بيانات الطقس، لذلك لا يمكن حساب مؤشر المخاطر.';
-    }
-}
-
-
-/* تشغيل الموقع */
-updateNav();
-
-renderReports();
-
-if (
-    location.hash &&
-    document.getElementById(location.hash.slice(1))
-) {
-    showPage(location.hash.slice(1));
-}
-
-</script>
-
-</body>
+      if (location.hash && document.getElementById(location.hash.slice(1))) {
+        showPage(location.hash.slice(1));
+      }
+    </script>
+  </body>
 </html>
